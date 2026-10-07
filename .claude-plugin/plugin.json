@@ -1,0 +1,8 @@
+{
+  "name": "conclaude",
+  "version": "0.1.0",
+  "description": "A side pane of every prompt you sent this session, the TL;DR of each answer, and a jump back to it",
+  "author": { "name": "walangstudio" },
+  "license": "MIT",
+  "types": "./types/index.d.ts"
+}
