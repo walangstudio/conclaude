@@ -277,7 +277,7 @@ test('a resumed session restores its saved list; a new session id starts empty',
   await $.session.start({ cwd: '.', surface: 'terminal', isInteractive: true })
   const ui = await $.ui.mount({ plugin: 'conclaude', surface: 'terminal', ...PANE })
   expect(await ui.find({ type: 'Button', key: 'jump-1', text: /old prompt/ })).toBeDefined()
-  expect(toasts).toContain('conClaude: restored 1 prompt from the saved session')
+  expect(toasts).toContain('restored 1 prompt from the saved session')
 
   id.now = 's2'
   await clock.advance(1000)
@@ -315,7 +315,7 @@ test('find filters by text or #n and keeps real numbers', async ($, on) => {
   expect(await ui.find({ type: 'Button', key: 'jump-3', text: /ci again/ })).toBeDefined()
   expect(await ui.find({ type: 'Button', text: /build docs/ })).toBeUndefined()
   await ui.input({ key: 'find-input', text: 'ci', kind: 'submit' })
-  expect(toasts).toContain('conClaude: 2 matches - Tab to pick one')
+  expect(toasts).toContain('2 matches - Tab to pick one')
   await ui.input({ key: 'find-input', text: 'zzz', kind: 'change' })
   expect(await ui.find({ type: 'Text', text: /No prompt matches "zzz"/ })).toBeDefined()
 })
@@ -335,7 +335,7 @@ test('clear asks first, then empties the list and tombstones the saved copy', as
   await ui.press({ key: 'yes' })
   expect(await ui.find({ type: 'Text', text: /No prompts yet/ })).toBeDefined()
   expect(files.get(`${DIR}/s1.json`)).toBe('{"deleted":true}')
-  expect(toasts).toContain('conClaude: cleared 1 prompt')
+  expect(toasts).toContain('cleared 1 prompt')
 })
 
 test('saved view lists other sessions, opens one read-only, copies its resume command, deletes with confirm', async ($, on) => {
@@ -353,7 +353,7 @@ test('saved view lists other sessions, opens one read-only, copies its resume co
   expect(await ui.find({ type: 'Button', text: /add retries/ })).toBeUndefined()
   expect(await ui.find({ type: 'Text', text: /^claude --resume s0$/ })).toBeDefined()
   await ui.press({ key: 'copy' })
-  expect(toasts).toContain('conClaude: copied: claude --resume s0')
+  expect(toasts).toContain('copied: claude --resume s0')
   await ui.press({ key: 'delete' })
   expect(await ui.find({ type: 'Text', text: /Delete this saved session\?/ })).toBeDefined()
   await ui.press({ key: 'yes' })
@@ -476,6 +476,6 @@ test('a prompt with no transcript row yet toasts instead of jumping', async ($, 
   const ui = await $.ui.mount({ plugin: 'conclaude', surface: 'desktop', ...PANE })
   await ui.press({ key: 'jump-1' })
   expect(scrolled.length).toBe(0)
-  expect(toasts).toContain('conClaude: that prompt is not in the transcript yet')
+  expect(toasts).toContain('that prompt is not in the transcript yet')
 })
 

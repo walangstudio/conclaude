@@ -218,7 +218,7 @@ async function syncSession($: EngineInterface) {
   await update($, locked, () => (failure ? id : null))
   await update($, asked, () => found?.asked ?? [])
   await update($, status, () => (failure ? { text: `couldn't read the saved session (${failure}); autosave is off for it` } : null))
-  if (found?.asked.length) void $.ui.toast(`conClaude: restored ${plural(found.asked.length, 'prompt')}${parked ? ' (not saved to disk yet)' : ' from the saved session'}`)
+  if (found?.asked.length) void $.ui.toast(`restored ${plural(found.asked.length, 'prompt')}${parked ? ' (not saved to disk yet)' : ' from the saved session'}`)
 }
 
 // A turn or summary that lands after its session was switched away patches that session's file instead.
@@ -278,7 +278,9 @@ async function write($: EngineInterface, fn: (list: Asked[], running: string | n
 async function jumpTo($: EngineInterface, one: Asked) {
   if (!one.uuid) return 'that prompt is not in the transcript yet'
   const moved = await $.ui.scroll({ to: { requestId: one.uuid }, block: 'start' }).catch((err: Error) => ({ deny: err.message }))
-  return moved.deny ? `can't jump there (${moved.deny})` : undefined
+  if (!moved.deny) return undefined
+  // The desktop app keeps its transcript to itself; only the terminal lets a plugin scroll it.
+  return /not scrollable/.test(moved.deny) ? "this app doesn't let plugins scroll the transcript; jumping works in the terminal" : `can't jump there (${moved.deny})`
 }
 
 // The ↳ glyph carries the state's color; the words still say it, so color is never the only cue.
@@ -439,7 +441,7 @@ export const register: Register = on => {
     const width = Math.max(1, e.props.bodyColumns)
     const gap = e.props.placement === 'dock' ? 1 : 0
     const rule = <Text color="subtle">{'─'.repeat(width)}</Text>
-    const toast = (text: string) => void $.ui.toast(`conClaude: ${text}`)
+    const toast = (text: string) => void $.ui.toast(text)
     const setView = (next: PaneView) => update($, view, () => next)
     const v = await read($, view)
     const list = await read($, asked)

@@ -1,6 +1,6 @@
 # conClaude
 
-![tests](https://img.shields.io/badge/tests-31%20passing-brightgreen) ![version](https://img.shields.io/badge/version-0.1.0-blue)
+![tests](https://img.shields.io/badge/tests-31%20passing-brightgreen) ![version](https://img.shields.io/badge/version-0.1.1-blue)
 
 conClaude is a list of every prompt you sent Claude, with a one-line TL;DR of each answer.
 
@@ -99,6 +99,10 @@ Slash commands aren't listed, and neither are prompts sent through `claude -p`.
 The TL;DRs come from Claude Haiku at low effort, through your normal Claude Code login. That's one short call per answer. When a call fails, the TL;DR is the start of the answer instead.
 
 conClaude writes its own TL;DRs. It doesn't need anything in your CLAUDE.md.
+
+## Known issues
+
+- **Claude Desktop: pressing a prompt doesn't scroll the transcript.** The desktop app doesn't let plugins scroll its transcript, so the jump only works in the terminal. The list, TL;DRs, find and saved sessions work in both.
 
 ## Develop
 
