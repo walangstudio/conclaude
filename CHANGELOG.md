@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.1] - 2026-10-08
+
+### Fixed
+- Toasts no longer repeat the name: Claude Code already shows them under the plugin's name.
+- On Claude Desktop, pressing a prompt explains that the app doesn't let plugins scroll the transcript, instead of a raw engine error. The jump works in the terminal.
+
 ## [0.1.0] - 2026-10-07
 
 ### Added
